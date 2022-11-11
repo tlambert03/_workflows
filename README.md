@@ -105,8 +105,19 @@ Workflow to validate that all files in the repo are included in the manifest.
 ```yaml
 name: CI
 
+on:
+  push:
+    branches: ["main"]
+    tags: ["v*"]
+
 jobs:
+
+  test:
+    ...
+
   deploy:
+    needs: test
+    if: "success() && startsWith(github.ref, 'refs/tags/')"
     uses: tlambert03/workflows/.github/workflows/deploy_pypi.yml@main
     with:
        twine_api_key: ${{ secrets.TWINE_API_KEY }}

@@ -28,6 +28,11 @@ on:
         type: string
         default: 'test'
         description: 'Comma-separated extras to install for testing'
+      pytest-args:
+        required: false
+        type: string
+        default: '-v --cov --cov-report=xml --cov-report=term-missing'
+        description: 'Additional arguments to pass to pytest'
       cancel-in-progress:
         required: false
         type: boolean
@@ -56,8 +61,8 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: ${{ inputs.python-version }}
-          # cache: 'pip'
-          # cache-dependency-path: 'pyproject.toml'
+          cache: 'pip'
+          cache-dependency-path: 'pyproject.toml'
 
       - uses: tlambert03/setup-qt-libs@v1.4
         if: inputs.use-qt
@@ -79,17 +84,16 @@ jobs:
             python -m pip install setuptools tox tox-gh-actions
           fi
 
-      - name: Test with tox
-        if: inputs.use-tox
+      - name: Run tests
+        shell: bash
         run: |
-          python -m tox
+          if [ ${{ inputs.use-tox }} == "false" ]; then
+            python -m pytest ${{ inputs.pytest-args }}
+          else
+            python -m tox
+          fi
         env:
           PLATFORM: ${{ inputs.platform }}
-
-      - name: Test without tox
-        if: inputs.use-tox == false
-        run: |
-          python -m pytest -v --cov --cov-report=xml --cov-report=term-missing
 
       - name: Upload code coverage
         uses: codecov/codecov-action@v3

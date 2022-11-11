@@ -63,7 +63,7 @@ jobs:
         if: inputs.use-qt
       
       - name: Setup xvfb
-        if: inputs.use-qt
+        if: inputs.use-qt && runner.os == 'Linux'
         run: |
           /sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid \
             --make-pidfile --background --exec /usr/bin/Xvfb \

@@ -57,7 +57,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          fetch-depth: 2  # for setuptools_scm
+          fetch-depth: 0  # for setuptools_scm
 
       - name: Set up Python ${{ inputs.python-version }}
         uses: actions/setup-python@v4

@@ -23,29 +23,27 @@ on:
         type: boolean
         default: false
         description: 'Whether to use tox to run the tests'
+      cancel-in-progress:
+        required: false
+        type: boolean
+        default: true
+        description: 'Whether to cancel in-progress workflows'
 
 jobs:
-  # check-manifest:
-  #   name: Check Manifest
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - uses: actions/setup-python@v4
-  #       with:
-  #         python-version: "3.x"
-  #     - run: pip install check-manifest && check-manifest
 
   test:
-    # name: ${{ inputs.platform }} (${{ inputs.python-version }})
+    name: ${{ inputs.platform }} (${{ inputs.python-version }})
     runs-on: ${{ inputs.platform }}
 
     steps:
       - name: Cancel Previous Runs
+        if: inputs.cancel-in-progress
         uses: styfle/cancel-workflow-action@0.11.0
         with:
           access_token: ${{ github.token }}
 
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
 
       - name: Set up Python ${{ inputs.python-version }}
         uses: actions/setup-python@v4
@@ -54,17 +52,14 @@ jobs:
           # cache: 'pip'
           # cache-dependency-path: 'pyproject.toml'
 
-      - name: Install dependencies
-        if: ${{ inputs.use-tox == true }}
+      - name: Test with tox
+        if: inputs.use-tox
         run: |
           python -m pip install -U pip
           python -m pip install setuptools tox tox-gh-actions
-
-      - name: Test with tox
-        if: ${{ inputs.use-tox == true }}
-        run: python -m tox
+          python -m tox
         env:
           PLATFORM: ${{ inputs.platform }}
 
-      - name: Coverage
+      - name: Upload code coverage
         uses: codecov/codecov-action@v3

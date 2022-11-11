@@ -12,7 +12,7 @@ on:
         required: false
         type: string
         default: '3.x'
-        description: 'The python version to run the tests on'
+        description: 'The python version to use'
       use-qt:
         required: false
         type: boolean
@@ -22,7 +22,7 @@ on:
         required: false
         type: boolean
         default: false
-        description: 'Whether to use tox to run the tests'
+        description: 'Whether to use tox to install deps and run tests'
       testing-extras:
         required: false
         type: string
@@ -31,8 +31,8 @@ on:
       pytest-args:
         required: false
         type: string
-        default: '-v --cov --cov-report=xml --cov-report=term-missing'
-        description: 'Additional arguments to pass to pytest'
+        default: '-v --color --cov --cov-report=xml --cov-report=term-missing'
+        description: 'Additional arguments to pass to pytest (if use-tox is false)'
       cancel-in-progress:
         required: false
         type: boolean

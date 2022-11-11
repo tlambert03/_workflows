@@ -23,6 +23,11 @@ on:
         type: boolean
         default: false
         description: 'Whether to use tox to run the tests'
+      testing-extras:
+        required: false
+        type: string
+        default: 'test'
+        description: 'Comma-separated extras to install for testing'
       cancel-in-progress:
         required: false
         type: boolean
@@ -60,6 +65,16 @@ jobs:
           python -m tox
         env:
           PLATFORM: ${{ inputs.platform }}
+
+      - uses: tlambert03/setup-qt-libs@v1.4
+        if: inputs.setup-qt
+
+      - name: Test without tox
+        if: inputs.use-tox == false
+        run: |
+          python -m pip install -U pip
+          python -m pip install -e .${{ (inputs.testing-extras && "[${inputs.testing-extras}]" || '' }}
+          python -m pytest -v --cov --cov-report=xml --cov-report=term-missing
 
       - name: Upload code coverage
         uses: codecov/codecov-action@v3

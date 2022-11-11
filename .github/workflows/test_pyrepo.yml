@@ -13,7 +13,7 @@ on:
         type: string
         default: '3.x'
         description: 'The python version to run the tests on'
-      setup-qt:
+      use-qt:
         required: false
         type: boolean
         default: false
@@ -67,7 +67,7 @@ jobs:
           PLATFORM: ${{ inputs.platform }}
 
       - uses: tlambert03/setup-qt-libs@v1.4
-        if: inputs.setup-qt
+        if: inputs.use-qt
 
       - name: Test without tox
         if: inputs.use-tox == false

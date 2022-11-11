@@ -9,6 +9,7 @@ Standard workflow to setup python and test a python package.
 ```yaml
     uses: tlambert03/workflows/.github/workflows/test_pyrepo.yml@main
     with:
+      # (all arguments optional)
       # The platform to run the tests on
       platform: 'ubuntu-latest'
       # The python version to use
@@ -61,7 +62,7 @@ Workflow to validate that all files in the repo are included in the manifest.
 ```yaml
     uses: tlambert03/workflows/.github/workflows/check_manifest.yml@main
     with:
-      # The python version to use
+      # [Optional]: The python version to use
       python-version: '3.x'
 ```
 
@@ -90,11 +91,11 @@ Workflow to validate that all files in the repo are included in the manifest.
     with:
       # The TWINE token (API Key) to use for deployment 
       twine_api_key: <REQUIRED>
-      # The platform to build on
+      # [Optional]: The platform to build on
       platform: 'ubuntu-latest'
-      # The python version to use
+      # [Optional]: The python version to use
       python-version: '3.x'
-      # Whether to autogenerate github release notes
+      # [Optional]: Whether to autogenerate github release notes
       generate_release_notes: true
 ```
 

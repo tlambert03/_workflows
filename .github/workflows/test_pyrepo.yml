@@ -70,12 +70,13 @@ jobs:
             -- :99 -screen 0 1920x1200x24 -ac +extension GLX
 
       - name: Install dependencies
+        shell: bash
         run: |
           python -m pip install -U pip
-          if [ ${{ inputs.use-tox }} == 'true' ]; then
-            python -m pip install setuptools tox tox-gh-actions
-          else
+          if [ ${{ inputs.use-tox }} == "false" ]; then
             python -m pip install -e .[${{ inputs.testing-extras }}]
+          else
+            python -m pip install setuptools tox tox-gh-actions
           fi
 
       - name: Test with tox

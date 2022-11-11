@@ -25,6 +25,16 @@ on:
         description: 'Whether to use tox to run the tests'
 
 jobs:
+  # check-manifest:
+  #   name: Check Manifest
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: actions/setup-python@v4
+  #       with:
+  #         python-version: "3.x"
+  #     - run: pip install check-manifest && check-manifest
+
   test:
     # name: ${{ inputs.platform }} (${{ inputs.python-version }})
     runs-on: ${{ inputs.platform }}

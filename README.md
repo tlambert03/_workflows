@@ -23,6 +23,8 @@ Standard workflow to setup python and test a python package.
       pytest-args: '-v --color --cov --cov-report=xml --cov-report=term-missing'
       # Whether to cancel in-progress workflows
       cancel-in-progress: true
+      # Whether to install pre-release versions of dependencies
+      install-pre-releases: false
 ```
 
 <details>

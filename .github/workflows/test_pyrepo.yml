@@ -42,7 +42,7 @@ on:
 jobs:
 
   test:
-    name: ${{ inputs.platform }} (${{ inputs.python-version }})
+    name: Test ${{ inputs.platform }} (${{ inputs.python-version }})
     runs-on: ${{ inputs.platform }}
     env:
       DISPLAY: ':99.0'

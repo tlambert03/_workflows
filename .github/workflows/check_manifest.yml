@@ -1,0 +1,21 @@
+name: Check Manifest
+
+on:
+  workflow_call:
+    inputs:
+      python-version:
+        required: false
+        type: string
+        default: '3.x'
+        description: 'The python version to run the tests on'
+
+jobs:
+  check-manifest:
+    name: Check Manifest
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.x"
+      - run: pip install check-manifest && check-manifest

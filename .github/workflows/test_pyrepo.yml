@@ -71,7 +71,7 @@ jobs:
           cache: 'pip'
           cache-dependency-path: 'pyproject.toml'
 
-      - uses: tlambert03/setup-qt-libs@v1.4
+      - uses: tlambert03/setup-qt-libs@v1.5
         if: inputs.use-qt
       
       - name: Setup xvfb
